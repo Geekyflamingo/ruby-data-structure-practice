@@ -1,4 +1,8 @@
 require 'pp'
+require 'json'
+curriculum = File.read('curriculum.json')
+
+CURRICULUM = JSON.parse(curriculum, symbolize_names: true)
 
 # Require json and parse the json file
 #
@@ -27,3 +31,12 @@ require 'pp'
 #       g4 on 2013-05-08 - 0
 #       g5 on 2013-06-08 - 0
 #       etc...
+CURRICULUM[:units].each do |unit|
+  puts unit[:name]
+  unit[:lessons].each do |lesson|
+    puts "  #{lesson[:name]}"
+    lesson[:occurrences].each do |occurence|
+      puts "#{occurence[1][:cohort][:name]} on #{occurence[0]} - #{occurence[1][:comments].count}"
+    end
+  end
+end
